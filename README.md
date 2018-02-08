@@ -22,8 +22,7 @@ xxx.zip包结构如下：
   ```
 在app/libs中加入测试需要的：
   ```
-  agora-rtc-sdk.jar
-  
+  agora-rtc-sdk.jar  
   ```
 在agora.io.dynamicload.MainActivity中修改：
   ```
