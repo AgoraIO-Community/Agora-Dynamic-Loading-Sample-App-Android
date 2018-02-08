@@ -39,6 +39,8 @@ xxx.zip包结构如下：
   // 例如：Environment.getExternalStorageDirectory().getAbsolutePath() + "/123/libs";
   mDepressUrl = mSaveUrl + File.separator + zipfileName;
   ```
+  
+  
 ###WARNING
 该开源项目未做下载文件完整性校验，未适配阿里dalvik.system.LexClassLoader。
 
