@@ -1,5 +1,7 @@
 Agora-Dynamic-Loading-Sample-App-Android
 
+当前工程适配道android O（8.0）
+
 示例项目演示动态加载SO，包含以下功能：
 
 1. 下载、解压Zip文件；

@@ -200,7 +200,10 @@ public class LoadUtils extends AsyncTask<String, Void, Boolean> {
             Class<?>[] innerClz = Class.forName("dalvik.system.DexPathList").getDeclaredClasses();
             Class eleClz = null;
             for (Class clz : innerClz) {
-                if (clz.getSimpleName().contains("Element")) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && clz.getSimpleName().equals("Element")) {
+                    eleClz = clz;
+                    break;
+                } else if (clz.getSimpleName().equals("NativeLibraryElement")) {
                     eleClz = clz;
                     break;
                 }
@@ -208,15 +211,26 @@ public class LoadUtils extends AsyncTask<String, Void, Boolean> {
 
             Constructor ele;
             if (eleClz != null) {
-                Class<?>[] params = {File.class, Boolean.TYPE, File.class, DexFile.class};
-                ele = eleClz.getDeclaredConstructor(params);
+
+                Object nativeLibraryPathElements;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    ele = eleClz.getDeclaredConstructor(new Class<?>[]{File.class, Boolean.TYPE, File.class, DexFile.class});
+                } else {
+                    ele = eleClz.getDeclaredConstructor(new Class<?>[]{File.class});
+                }
+
                 ele.setAccessible(true);
 
-                Object nativeLibraryPathElements = dexPathList.getClass().getDeclaredField("nativeLibraryPathElements");
+                nativeLibraryPathElements = dexPathList.getClass().getDeclaredField("nativeLibraryPathElements");
                 ((Field) nativeLibraryPathElements).setAccessible(true);
 
                 Object[] objs = (Object[]) ((Field) nativeLibraryPathElements).get(dexPathList);
-                Object ob = ele.newInstance(new File(path), true, null, null);
+                Object ob;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    ob = ele.newInstance(new File(path), true, null, null);
+                } else {
+                    ob = ele.newInstance(new File(path));
+                }
                 Object eles = Array.newInstance(eleClz, objs.length + 1);
                 Array.set(eles, 0, ob);
                 for (int i = 1; i < objs.length + 1; i++) {

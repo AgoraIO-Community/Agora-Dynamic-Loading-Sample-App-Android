@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
     private final static int MSG_CREATE_LOADER_PATH = 0x1002;
     private final static int MSG_TEST = 0x1003;
 
-    private final static String mDownloadUrl = "http://172.16.0.225:8000/AndroidStudioProjects/libs.zip";
+    private final static String mDownloadUrl = YOUR PATH;//"http://172.16.0.225:8000/AndroidStudioProjects/libs.zip";
     private final static String mSaveUrl = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123";
     private final static String mDepressUrl = Environment.getExternalStorageDirectory().getAbsolutePath() + "/123/libs";
     private final static String mSOName = "libagora-rtc-sdk-jni.so";
